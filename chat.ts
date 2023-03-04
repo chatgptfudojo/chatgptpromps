@@ -56,5 +56,5 @@ const model = "gpt-3.5-turbo";
 const temperature = 0.5;
 const top_p = 0.8;
 
-const client = new ChatGPTClient(process.argv[2] || 'promps/default.txt', apiKey, model, temperature, top_p);
+const client = new ChatGPTClient(process.argv[2] || 'prompts/default.txt', apiKey, model, temperature, top_p);
 client.init();

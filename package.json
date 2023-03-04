@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chatgpt": "^5.0.6",
     "dotenv": "^16.0.3"
   }
 }
