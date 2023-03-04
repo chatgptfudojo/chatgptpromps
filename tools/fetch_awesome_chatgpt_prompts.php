@@ -18,6 +18,18 @@ foreach($matches[0] as $matchText) {
         && \strpos($matchText, "/video>") === false
     ) {
         $matchTextSha1 = sha1($matchText);
-        print $matchTextSha1 . "\n" . $matchText  . "\n\n";
+        //extract the first sentence
+
+        $matchTextSentences = explode(".", $matchText);
+
+        $promptShortName = str_replace(" ","_",strtolower($matchTextSentences[0]));
+
+        $promptData = [
+            'sha1' => $matchTextSha1,
+            'short_name' => $promptShortName,
+            'promt' => $matchText
+        ];
+
+        print_r($promptData);
     }
 }
