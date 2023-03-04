@@ -33,7 +33,7 @@ class ChatGPTClient {
       parentMessageId: this.parentMessageId,
       onProgress: this.handleProgress.bind(this)
     });
-    process.stdout.write("\n");
+    process.stdout.write("\n\n");
     this.parentMessageId = res.id;
   }
 
