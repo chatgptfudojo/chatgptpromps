@@ -6,6 +6,7 @@ dotenv.config();
 
 class ChatGPTClient {
   constructor(promptTemplate, apiKey, model, temperature, top_p) {
+    this.buffer = "";
     this.promptTemplate = promptTemplate;
     this.parentMessageId = null;
     this.api = new ChatGPTAPI({
@@ -28,21 +29,22 @@ class ChatGPTClient {
   }
 
   async sendMessage(messageToChatGPT) {
-    let buffer = "";
+    this.buffer = "";
+    process.stdout.write("chatgpt: ");
     const res = await this.api.sendMessage(messageToChatGPT, {
       parentMessageId: this.parentMessageId,
       onProgress: this.handleProgress.bind(this)
     });
-    process.stdout.write("\n\n");
+    process.stdout.write("\n");
+    process.stdout.write("me: ");
     this.parentMessageId = res.id;
   }
 
   handleProgress(partialResponse) {
-    let buffer = this.buffer || "";
-    const bufferDiff = partialResponse.text.substr(buffer.length);
-    buffer = partialResponse.text;
+    const bufferDiff = partialResponse.text.substr(this.buffer.length);
+    this.buffer = partialResponse.text;
     process.stdout.write(bufferDiff);
-    this.buffer = buffer;
+    this.buffer = partialResponse.text;
   }
 
   async handleInput(data) {
