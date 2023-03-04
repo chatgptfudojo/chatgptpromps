@@ -7,7 +7,7 @@ $pattern = "/>(.*)\n/";
 
 preg_match_all($pattern, $content, $matches);
 
-$promps = [];
+$promptDataArr = [];
 
 foreach($matches[0] as $matchText) {
     $matchText = trim($matchText);
@@ -23,6 +23,9 @@ foreach($matches[0] as $matchText) {
         $matchTextSentences = explode(".", $matchText);
 
         $promptShortName = str_replace(" ","_",strtolower($matchTextSentences[0]));
+        $promptShortName = str_replace([",","'","{","}"],"",$promptShortName);
+        $promptShortName = strip_tags($promptShortName);
+        $promptShortName = $promptShortName . "_" . $matchTextSha1;
 
         $promptData = [
             'sha1' => $matchTextSha1,
@@ -30,6 +33,8 @@ foreach($matches[0] as $matchText) {
             'promt' => $matchText
         ];
 
-        print_r($promptData);
+        $promptDataArr[] = $promptData;
     }
 }
+
+print \json_encode($promptDataArr) . "\n";
