@@ -8,22 +8,23 @@ const sha1 = require('sha1');
   const response = await fetch(url);
   const body = await response.text();
 
-  const regex = /^>.*\n$/gm;
-
+  const regex = /^# Prompts(.|[\r\n])*?CC-0$/gm;
   const matches = body.match(regex);
 
-  const promptArr = [];
+  const matchBlock = matches[0];
 
-  matches.forEach(match => {
-    let promptText = match.substr(2);
-    const promptSha1 = sha1(promptText);
-    const promptSentences = promptText.split(".");
-    const shortName = promptSentences[0].toLowerCase();
+  const sections = matchBlock.split("\n##");
 
-    promptArr.push({
-      sha1: promptSha1
-    }); 
-  });
-
-  console.log(JSON.stringify(promptArr));
+  let i;
+  for (i = 1; i < sections.length; i++) {
+    const matchPromptBody = sections[i].match(/^>.*\n$/gm);
+    if (matchPromptBody) {
+      const promptPayload = {};
+      let lines = sections[i].split("\n");
+      let firstLine = lines.shift();
+      promptPayload.title = firstLine.trim();
+      promptPayload.body = matchPromptBody[0].substr(2);
+      console.log(promptPayload);
+    }
+  } 
 })();
