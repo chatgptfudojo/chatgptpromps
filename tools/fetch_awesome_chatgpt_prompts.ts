@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 const sha1 = require('sha1');
 
-(async() => {
+async function main() {
 
   const url = "https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/README.md";
 
@@ -27,4 +27,6 @@ const sha1 = require('sha1');
       console.log(promptPayload);
     }
   } 
-})();
+};
+
+main();
