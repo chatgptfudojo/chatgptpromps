@@ -1,5 +1,11 @@
 import fetch from 'node-fetch';
-const sha1 = require('sha1');
+import sha1 from 'sha1';
+
+type PromptPayload = {
+  title: string
+  body: string
+  sha1: string
+}
 
 async function main() {
 
@@ -19,11 +25,12 @@ async function main() {
   for (i = 1; i < sections.length; i++) {
     const matchPromptBody = sections[i].match(/^>.*\n$/gm);
     if (matchPromptBody) {
-      const promptPayload = {};
+      const promptPayload = {} as PromptPayload;
       let lines = sections[i].split("\n");
       let firstLine = lines.shift();
       promptPayload.title = firstLine.trim();
       promptPayload.body = matchPromptBody[0].substr(2);
+      promptPayload.sha1 = sha1(promptPayload.body);
       console.log(promptPayload);
     }
   } 

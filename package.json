@@ -13,5 +13,8 @@
     "dotenv": "^16.0.3",
     "node-fetch": "^3.3.0",
     "sha1": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.14.6"
   }
 }
