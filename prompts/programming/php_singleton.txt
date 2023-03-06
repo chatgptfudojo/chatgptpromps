@@ -1,0 +1,1 @@
+I am a php developer and I want you to show me an example of singleton class, do not explain and just show me the code and no greetings and no markdown.
